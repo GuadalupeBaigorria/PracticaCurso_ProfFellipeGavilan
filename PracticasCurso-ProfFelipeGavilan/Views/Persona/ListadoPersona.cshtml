@@ -1,0 +1,42 @@
+﻿@model IEnumerable<PersonaViewModel>
+
+@{
+    ViewData["Title"] = "Listado de Personas";
+}
+<form asp-action="ListadoPersona">
+<h1>Personas</h1>
+<a asp-action="Index" class="btn btn-primary mb-3">Crear Nuevo</a>
+    <table>
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Nombre</th>
+                <th>Apellido</th>
+                <th>Fecha de Nacimiento</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var persona in Model)
+            {
+                <tr>
+                    <td>
+                        <a class="btn-primary">Editar</a>
+                        <a class="btn btn-danger">Eliminar</a>
+                    </td>
+                    <td>
+                        @persona.Id
+                    </td>
+                    <td>
+                        @persona.Nombre
+                    </td>
+                    <td>
+                        @persona.Apellido
+                    </td>
+                    <td>
+                        @persona.FechaDeNacimiento
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</form>

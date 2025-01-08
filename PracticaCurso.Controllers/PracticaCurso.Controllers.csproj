@@ -11,6 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\PracticaCurso.DAL\PracticaCurso.DAL.csproj" />
     <ProjectReference Include="..\PracticaCurso.Models\PracticaCurso.Models.csproj" />
   </ItemGroup>
 
