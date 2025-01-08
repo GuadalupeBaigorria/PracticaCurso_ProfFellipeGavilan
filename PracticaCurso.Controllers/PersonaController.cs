@@ -43,5 +43,6 @@ namespace PracticaCurso.Controllers
 
             return RedirectToAction("ListadoPersona");
         }
+
     }
 }
