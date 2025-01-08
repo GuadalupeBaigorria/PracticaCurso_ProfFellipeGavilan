@@ -27,5 +27,21 @@ namespace PracticaCurso.Controllers
         {
             return View(Listas.GetLista());
         }
+
+        [HttpGet]
+        public async Task<ActionResult> Editar(int id)
+        {
+            return View(Listas.GetLista().Where(x => x.Id == id).SingleOrDefault());
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> Editar(PersonaViewModel persona)
+        {
+            Listas.GetLista().Where(x => x.Id == persona.Id).SingleOrDefault().Nombre = persona.Nombre;
+            Listas.GetLista().Where(x => x.Id == persona.Id).SingleOrDefault().Apellido = persona.Apellido;
+            Listas.GetLista().Where(x => x.Id == persona.Id).SingleOrDefault().FechaDeNacimiento = persona.FechaDeNacimiento;
+
+            return RedirectToAction("ListadoPersona");
+        }
     }
 }
