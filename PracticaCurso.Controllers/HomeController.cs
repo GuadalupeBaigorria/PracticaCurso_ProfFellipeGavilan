@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
-using PracticasCurso_ProfFelipeGavilan.Models;
+using Microsoft.Extensions.Logging;
+using PracticaCurso.Models;
 using System.Diagnostics;
 
 namespace PracticasCurso_ProfFelipeGavilan.Controllers

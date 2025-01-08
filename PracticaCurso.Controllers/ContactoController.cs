@@ -1,13 +1,19 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using PracticasCurso_ProfFelipeGavilan.Models;
+﻿using PracticaCurso.Models;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
+using PracticaCurso.Models;
 
-namespace PracticasCurso_ProfFelipeGavilan.Controllers
+namespace PracticaCurso.Controllers
 {
     public class ContactoController : Controller
     {
         public IActionResult Index()
         {
-            return View();
+            return (IActionResult)View();
         }
         // GET: ContactoController/Details/5
         public ActionResult Contacto()
