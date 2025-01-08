@@ -15,7 +15,7 @@
                 <th>Fecha de Nacimiento</th>
             </tr>
         </thead>
-        <tbody>
+        <tbody id="reordenable">
             @foreach (var persona in Model)
             {
                 <tr>
@@ -40,3 +40,11 @@
         </tbody>
     </table>
 </form>
+
+@section Scripts{
+    <script>
+        $(function (){
+            $("#reordenable").sortable();
+        })
+    </script>
+}
