@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Mvc.Rendering;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -13,8 +14,8 @@ namespace PracticaCurso.Models
         public int NumeroDeCuenta { get; set; }
 
         [Required(ErrorMessage = "Ingrese Tipo de Cuenta")]
-        [StringLength(maximumLength: 50)]
         public string TipoCuenta { get; set; }
+        public List<SelectListItem> TiposDeCuenta { get; set; }
 
         [Required(ErrorMessage = "Ingrese Dinero de Cuenta")]
         public double DineroEnCuenta { get; set; }

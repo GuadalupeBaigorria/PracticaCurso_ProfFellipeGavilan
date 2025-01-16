@@ -1,4 +1,5 @@
-﻿using PracticaCurso.Models;
+﻿using Microsoft.AspNetCore.Mvc.Rendering;
+using PracticaCurso.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,5 +11,6 @@ namespace PracticaCurso.DAL.Interfaces
     public interface IRepositorioCuentas
     {
         Task Crear(CuentaViewModel cuenta);
+        Task<IEnumerable<TipoCuentaViewModel>> ObtenerTiposCuenta();
     }
 }

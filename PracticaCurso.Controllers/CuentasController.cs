@@ -10,6 +10,8 @@ using System.Threading.Tasks;
 using PracticaCurso.DAL;
 using PracticaCurso.DAL.Interfaces;
 using PracticaCurso.Models;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using System.Collections;
 
 namespace PracticaCurso.Controllers
 {
@@ -29,7 +31,19 @@ namespace PracticaCurso.Controllers
 
         public async Task<IActionResult> Crear(CuentaViewModel cuenta)
         {
-            return (IActionResult)View();
+            var tiposdecuenta = await repositorioCuentas.ObtenerTiposCuenta();
+
+            cuenta.TiposDeCuenta = tiposdecuenta
+                .Select(c => new SelectListItem
+                {
+                    Value = c.Id.ToString(),
+                    Text = c.TipoCuenta
+                })
+                .ToList();
+
+            return View(cuenta);
+            //return RedirectToAction("Index");
+            //return View();
         }
 
         [HttpPost]
@@ -41,6 +55,19 @@ namespace PracticaCurso.Controllers
             }
             repositorioCuentas.Crear(cuenta);
             return RedirectToAction("Index");
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> ObtenerTipoCuentas(int cuentaId)
+        {
+            var tiposDeCuenta = await repositorioCuentas.ObtenerTiposCuenta();
+            var listaItems = tiposDeCuenta.Select(c => new SelectListItem
+            {
+                Value = c.Id.ToString(), // Suponiendo que Id es la propiedad de clave
+                Text = c.TipoCuenta // Suponiendo que Nombre es la propiedad a mostrar
+            }).ToList();
+
+            return View(listaItems);
         }
     }
 }
