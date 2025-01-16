@@ -1,0 +1,23 @@
+﻿@using PracticaCurso.Models;
+@model CuentaViewModel
+@{
+    ViewData["Title"] = "Ver Cuentas";
+}
+
+<h1>Crear</h1>
+<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+<form asp-controller="Cuentas" asp-action="CrearCuenta">
+    <div class="mb-3">
+        <label for="NumeroDeCuenta" class="form-label">Número de Cuenta</label>
+        <input type="text" id="NumeroDeCuenta" name="NumeroDeCuenta" class="form-control" />
+        <label for="TipoCuenta" class="form-label">Tipo Cuenta</label>
+        <input type="text" id="TipoCuenta" name="TipoCuenta" class="form-control" />
+        <label for="DineroEnCuenta" class="form-label">Dinero en  Cuenta</label>
+        <input type="number" id="DineroEnCuenta" name="DineroEnCuenta" class="form-control" />
+        <label for="TipoDeTarjeta" class="form-label">Tipo de Tarjeta</label>
+        <input type="text" id="TipoDeTarjeta" name="TipoDeTarjeta" class="form-control" />
+        <label for="DineroDisponibleTC" class="form-label">Dinero disponible en TC</label>
+        <input type="number" id="DineroDisponibleTC" name="DineroDisponibleTC" class="form-control" />
+    </div>
+    <button type="submit" class="btn btn-primary">Enviar</button>
+</form>

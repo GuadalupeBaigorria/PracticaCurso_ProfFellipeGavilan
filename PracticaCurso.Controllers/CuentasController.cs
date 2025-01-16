@@ -7,16 +7,19 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using PracticaCurso.DAL;
+using PracticaCurso.DAL.Interfaces;
+using PracticaCurso.Models;
 
 namespace PracticaCurso.Controllers
 {
     public class CuentasController : Controller
     {
-        private readonly string connectionString;
+        private readonly IRepositorioCuentas repositorioCuentas;
 
-        public CuentasController(IConfiguration configuration)
+        public CuentasController(IRepositorioCuentas repositorioCuentas)
         {
-            connectionString = configuration.GetConnectionString("DefaultConnection");
+            this.repositorioCuentas = repositorioCuentas;
         }
 
         public IActionResult Index()
@@ -24,13 +27,20 @@ namespace PracticaCurso.Controllers
             return (IActionResult)View();
         }
 
-        public IActionResult Crear()
+        public async Task<IActionResult> Crear(CuentaViewModel cuenta)
         {
-            using (var connection = new SqlConnection(connectionString))
+            return (IActionResult)View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> CrearCuenta(CuentaViewModel cuenta)
+        {
+            if (!ModelState.IsValid)
             {
-                var query = connection.Query("SELECT 1").First();
+                return View(cuenta);
             }
-            return View();
+            repositorioCuentas.Crear(cuenta);
+            return RedirectToAction("Index");
         }
     }
 }

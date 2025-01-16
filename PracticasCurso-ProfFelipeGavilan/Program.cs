@@ -1,8 +1,10 @@
+using PracticaCurso.DAL;
+using PracticaCurso.DAL.Interfaces;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
-
+builder.Services.AddTransient<IRepositorioCuentas, RepositorioCuentas>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

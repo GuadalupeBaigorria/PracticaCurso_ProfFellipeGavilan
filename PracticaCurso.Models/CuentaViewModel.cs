@@ -10,7 +10,6 @@ namespace PracticaCurso.Models
     public class CuentaViewModel
     {
         [Required(ErrorMessage = "Ingrese Id.")]
-        [StringLength(maximumLength: 50)]
         public int NumeroDeCuenta { get; set; }
 
         [Required(ErrorMessage = "Ingrese Tipo de Cuenta")]
@@ -18,7 +17,6 @@ namespace PracticaCurso.Models
         public string TipoCuenta { get; set; }
 
         [Required(ErrorMessage = "Ingrese Dinero de Cuenta")]
-        [StringLength(maximumLength: 50)]
         public double DineroEnCuenta { get; set; }
 
         [Required(ErrorMessage = "Ingrese Tipo de Tarjeta")]
@@ -26,7 +24,6 @@ namespace PracticaCurso.Models
         public string TipoDeTarjeta { get; set; }
 
         [Required(ErrorMessage = "Ingrese Dinero disponible en Tarjeta de Crédito")]
-        [StringLength(maximumLength: 50)]
         public double DineroDisponibleTC { get; set; }
     }
 }
