@@ -8,11 +8,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Controllers\" />
-    <Folder Include="Models\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\PracticaCurso.Controllers\PracticaCurso.Controllers.csproj" />
     <ProjectReference Include="..\PracticaCurso.Models\PracticaCurso.Models.csproj" />
   </ItemGroup>
