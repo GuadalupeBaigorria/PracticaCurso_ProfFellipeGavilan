@@ -12,36 +12,61 @@ using PracticaCurso.DAL.Interfaces;
 using PracticaCurso.Models;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Collections;
+using AutoMapper;
 
 namespace PracticaCurso.Controllers
 {
+    
     public class CuentasController : Controller
     {
         private readonly IRepositorioCuentas repositorioCuentas;
-
-        public CuentasController(IRepositorioCuentas repositorioCuentas)
+        private readonly IMapper mapper;
+        public CuentasController(IRepositorioCuentas repositorioCuentas, IMapper mapper)
         {
             this.repositorioCuentas = repositorioCuentas;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> IndexAsync()
         {
-            return (IActionResult)View();
+
+            var cuentas = await repositorioCuentas.ObtenerCuentas();
+            //var modelo = mapper.Map<IEnumerable<CuentaViewModel>>(cuentas);
+            var modelo = new List<CuentaViewModel>();
+            foreach (var cuenta in cuentas)
+            {
+                modelo.Add(new CuentaViewModel
+                {
+                    NumeroDeCuenta = cuenta.NumeroDeCuenta,
+                    TipoCuenta = cuenta.TipoCuenta,
+                    DineroDisponibleTC = cuenta.DineroDisponibleTC,
+                    DineroEnCuenta = cuenta.DineroEnCuenta,
+                    TipoDeTarjeta = cuenta.TipoDeTarjeta
+                });
+            }
+
+            return View(modelo);
+            //return (IActionResult)View();
         }
 
         public async Task<IActionResult> Crear(CuentaViewModel cuenta)
         {
+            CuentasViewModel cuentas = new CuentasViewModel();
+
             var tiposdecuenta = await repositorioCuentas.ObtenerTiposCuenta();
+            cuentas.TiposDeCuenta = tiposdecuenta.Select(c => new SelectListItem
+            {
+                Value = c.Id.ToString(),
+                Text = c.TipoCuenta.ToString() 
+            }).ToList();
 
-            cuenta.TiposDeCuenta = tiposdecuenta
-                .Select(c => new SelectListItem
-                {
-                    Value = c.Id.ToString(),
-                    Text = c.TipoCuenta
-                })
-                .ToList();
+            cuentas.Cuenta = new CuentaViewModel();
+            cuentas.Cuenta.NumeroDeCuenta = cuenta.NumeroDeCuenta;
+            cuentas.Cuenta.TipoDeTarjeta = cuenta.TipoDeTarjeta;
+            cuentas.Cuenta.TipoCuenta = cuenta.TipoCuenta;
+            cuentas.Cuenta.DineroEnCuenta = cuenta.DineroEnCuenta;
+            cuentas.Cuenta.DineroDisponibleTC = cuenta.DineroDisponibleTC;
 
-            return View(cuenta);
+            return View(cuentas);
             //return RedirectToAction("Index");
             //return View();
         }

@@ -1,9 +1,44 @@
 ﻿@using PracticaCurso.Models;
-@model CuentaViewModel
+@model IEnumerable<CuentaViewModel>
 @{
     ViewData["Title"] = "Ver Cuentas";
 }
 
-<h1>Crear</h1>
+<h1>Cuentas</h1>
 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-<a asp-action="Crear" class="btn btn-primary mb-3">Crear Nuevo</a>
+<form asp-action="Index">
+    <a asp-action="Crear" class="btn btn-primary mb-3">Crear Nuevo</a>
+    <table>
+        <thead>
+            <tr>
+                <th>Número de Cuenta</th>
+                <th>Tipo de Cuenta</th>
+                <th>Dinero en Cuenta</th>
+                <th>Tipo de Tarjeta</th>
+                <th>Dinero disponible TC</th>
+            </tr>
+        </thead>
+        <tbody id="reordenable">
+            @foreach (var cuenta in Model)
+            {
+                <tr>
+                    <td>
+                        @cuenta.NumeroDeCuenta
+                    </td>
+                    <td>
+                        @cuenta.TipoCuenta
+                    </td>
+                    <td>
+                        @cuenta.DineroEnCuenta
+                    </td>
+                    <td>
+                        @cuenta.TipoDeTarjeta
+                    </td>
+                    <td>
+                        @cuenta.DineroDisponibleTC
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</form>

@@ -29,6 +29,18 @@ namespace PracticaCurso.DAL
                                                     ;", cuenta);
             cuenta.NumeroDeCuenta = numeroDeCuenta;
         }
+        public async Task<IEnumerable<CuentaViewModel>> ObtenerCuentas()
+        {
+            try
+            {
+                using var connection = new SqlConnection(connectionString);
+                return await connection.QueryAsync<CuentaViewModel>(@"SELECT * FROM Cuentas");
+            }
+            catch (Exception ex)
+            {
+                return Enumerable.Empty<CuentaViewModel>();
+            }
+        }
 
         public async Task<IEnumerable<TipoCuentaViewModel>> ObtenerTiposCuenta()
         {

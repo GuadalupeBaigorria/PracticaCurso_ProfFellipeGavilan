@@ -1,5 +1,5 @@
 ﻿@using PracticaCurso.Models;
-@model CuentaViewModel
+@model CuentasViewModel
 
 @{
     ViewData["Title"] = "Crear Cuenta";
@@ -11,14 +11,14 @@
 
 <form asp-controller="Cuentas" asp-action="CrearCuenta" method="post">
     <div class="mb-3">
-        <label asp-for="NumeroDeCuenta" class="form-label"></label>
-        <input asp-for="NumeroDeCuenta" class="form-control" />
-        <span asp-validation-for="NumeroDeCuenta" class="text-danger"></span>
+        <label asp-for="Cuenta.NumeroDeCuenta" class="form-label"></label>
+        <input asp-for="Cuenta.NumeroDeCuenta" class="form-control" />
+        <span asp-validation-for="Cuenta.NumeroDeCuenta" class="text-danger"></span>
     </div>
 
     <div class="mb-3">
-        <label asp-for="TipoCuenta" class="form-label"></label>
-        <select asp-for="TipoCuenta" class="form-select">
+        <label asp-for="Cuenta.TipoCuenta" class="form-label"></label>
+        <select asp-for="Cuenta.TipoCuenta" class="form-select">
             @if (Model.TiposDeCuenta != null && Model.TiposDeCuenta.Any())
             {
                 @foreach (var tipo in Model.TiposDeCuenta)
@@ -31,25 +31,25 @@
                 <option value="">-- No hay tipos de cuenta disponibles --</option>
             }
         </select>
-        <span asp-validation-for="TipoCuenta" class="text-danger"></span>
+        <span asp-validation-for="Cuenta.TipoCuenta" class="text-danger"></span>
     </div>
 
     <div class="mb-3">
-        <label asp-for="DineroEnCuenta" class="form-label"></label>
-        <input asp-for="DineroEnCuenta" class="form-control" />
-        <span asp-validation-for="DineroEnCuenta" class="text-danger"></span>
+        <label asp-for="Cuenta.DineroEnCuenta" class="form-label"></label>
+        <input asp-for="Cuenta.DineroEnCuenta" class="form-control" />
+        <span asp-validation-for="Cuenta.DineroEnCuenta" class="text-danger"></span>
     </div>
 
     <div class="mb-3">
-        <label asp-for="TipoDeTarjeta" class="form-label"></label>
-        <input asp-for="TipoDeTarjeta" class="form-control" />
-        <span asp-validation-for="TipoDeTarjeta" class="text-danger"></span>
+        <label asp-for="Cuenta.TipoDeTarjeta" class="form-label"></label>
+        <input asp-for="Cuenta.TipoDeTarjeta" class="form-control" />
+        <span asp-validation-for="Cuenta.TipoDeTarjeta" class="text-danger"></span>
     </div>
 
     <div class="mb-3">
-        <label asp-for="DineroDisponibleTC" class="form-label"></label>
-        <input asp-for="DineroDisponibleTC" class="form-control" />
-        <span asp-validation-for="DineroDisponibleTC" class="text-danger"></span>
+        <label asp-for="Cuenta.DineroDisponibleTC" class="form-label"></label>
+        <input asp-for="Cuenta.DineroDisponibleTC" class="form-control" />
+        <span asp-validation-for="Cuenta.DineroDisponibleTC" class="text-danger"></span>
     </div>
 
     <button type="submit" class="btn btn-primary">Crear Cuenta</button>

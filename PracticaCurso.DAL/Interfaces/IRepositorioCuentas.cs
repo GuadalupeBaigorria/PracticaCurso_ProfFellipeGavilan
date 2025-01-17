@@ -11,6 +11,7 @@ namespace PracticaCurso.DAL.Interfaces
     public interface IRepositorioCuentas
     {
         Task Crear(CuentaViewModel cuenta);
+        Task<IEnumerable<CuentaViewModel>> ObtenerCuentas();
         Task<IEnumerable<TipoCuentaViewModel>> ObtenerTiposCuenta();
     }
 }
