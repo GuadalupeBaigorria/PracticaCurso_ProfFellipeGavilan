@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using PracticaCurso.Models;
 using System;
@@ -12,11 +14,44 @@ namespace PracticaCurso.Controllers
     public class UsuariosController : Controller
     {
         private readonly UserManager<UsuarioViewModel> userManager;
+        private readonly SignInManager<UsuarioViewModel> signInManager;
 
-        public UsuariosController(UserManager<UsuarioViewModel> userManager) 
+        public UsuariosController(UserManager<UsuarioViewModel> userManager,
+            SignInManager<UsuarioViewModel> signInManager) 
         {
             this.userManager = userManager;
+            this.signInManager = signInManager;
         }
+        [AllowAnonymous]
+        [HttpGet]
+        public IActionResult Login()
+        {
+            return View();
+        }
+
+        [AllowAnonymous]
+        [HttpPost]
+        public async Task<IActionResult> Login(LoginViewModel modelo)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(modelo);
+            }
+
+            var resultado = await signInManager.PasswordSignInAsync(modelo.Email, modelo.Password, modelo.Recuerdame,
+                lockoutOnFailure: false);
+
+            if (resultado.Succeeded)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+            else
+            {
+                ModelState.AddModelError(String.Empty, "Nombre de usuario o contraseña incorrectos");
+                return View(modelo);
+            }
+        }
+
         public IActionResult Registro()
         {
             return View();
@@ -36,6 +71,7 @@ namespace PracticaCurso.Controllers
 
             if(resultado.Succeeded)
             {
+                await signInManager.SignInAsync(usuario, isPersistent: true);
                 return RedirectToAction("Index", "Home");
             }
             else
@@ -49,6 +85,13 @@ namespace PracticaCurso.Controllers
             }
 
             return RedirectToAction("Registro", "Usuario");
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> LogOut()
+        {
+            await HttpContext.SignOutAsync(IdentityConstants.ApplicationScheme);
+            return RedirectToAction("Index", "Home");
         }
     }
 }

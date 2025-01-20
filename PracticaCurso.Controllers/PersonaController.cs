@@ -6,10 +6,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using PracticaCurso.DAL;
+using Microsoft.AspNetCore.Authorization;
 namespace PracticaCurso.Controllers
 {
     public class PersonaController : Controller
     {
+        [Authorize]
         public IActionResult Index()
         {
             return (IActionResult)View();

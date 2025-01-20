@@ -15,6 +15,7 @@ using System.Collections;
 using AutoMapper;
 using System.Data;
 using ClosedXML.Excel;
+using Microsoft.AspNetCore.Authorization;
 
 namespace PracticaCurso.Controllers
 {
@@ -28,6 +29,7 @@ namespace PracticaCurso.Controllers
             this.repositorioCuentas = repositorioCuentas;
         }
 
+        [Authorize]
         public async Task<IActionResult> IndexAsync()
         {
 

@@ -6,11 +6,13 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using PracticaCurso.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace PracticaCurso.Controllers
 {
     public class ContactoController : Controller
     {
+        [Authorize]
         public IActionResult Index()
         {
             return (IActionResult)View();

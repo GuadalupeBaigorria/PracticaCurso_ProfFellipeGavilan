@@ -69,7 +69,7 @@ namespace PracticaCurso.DAL
 
         public Task<string?> GetPasswordHashAsync(UsuarioViewModel user, CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            return Task.FromResult(user.PasswordHash);
         }
 
         public Task<string> GetUserIdAsync(UsuarioViewModel user, CancellationToken cancellationToken)
