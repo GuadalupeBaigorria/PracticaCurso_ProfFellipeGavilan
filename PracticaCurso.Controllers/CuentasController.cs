@@ -13,10 +13,12 @@ using PracticaCurso.Models;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Collections;
 using AutoMapper;
+using System.Data;
+using ClosedXML.Excel;
 
 namespace PracticaCurso.Controllers
 {
-    
+
     public class CuentasController : Controller
     {
         private readonly IRepositorioCuentas repositorioCuentas;
@@ -48,6 +50,62 @@ namespace PracticaCurso.Controllers
             //return (IActionResult)View();
         }
 
+        public async Task<FileResult> ExportExcel()
+        {
+            var cuentas = await repositorioCuentas.ObtenerCuentas();
+            //var modelo = mapper.Map<IEnumerable<CuentaViewModel>>(cuentas);
+            var modelo = new List<CuentaViewModel>();
+            foreach (var cuenta in cuentas)
+            {
+                modelo.Add(new CuentaViewModel
+                {
+                    NumeroDeCuenta = cuenta.NumeroDeCuenta,
+                    TipoCuenta = cuenta.TipoCuenta,
+                    DineroDisponibleTC = cuenta.DineroDisponibleTC,
+                    DineroEnCuenta = cuenta.DineroEnCuenta,
+                    TipoDeTarjeta = cuenta.TipoDeTarjeta
+                });
+            }
+
+            var nombreArchivo = $"Cuentas.xlsx";
+
+            return GenerateExcel(nombreArchivo, modelo);
+        }
+
+        private FileResult GenerateExcel(string nombreArchivo,
+            IEnumerable<CuentaViewModel> cuentas)
+        {
+            DataTable dataTable = new DataTable("Cuentas");
+            dataTable.Columns.AddRange(new DataColumn[]
+            {
+                new DataColumn("NumeroDeCuenta"),
+                new DataColumn("TipoCuenta"),
+                new DataColumn("DineroDisponibleTC"),
+                new DataColumn("DineroEnCuenta"),
+                new DataColumn("TipoDeTarjeta"),
+            });
+
+            foreach (var cuenta in cuentas)
+            {
+                dataTable.Rows.Add(cuenta.NumeroDeCuenta,
+                    cuenta.TipoCuenta,
+                    cuenta.DineroDisponibleTC,
+                    cuenta.DineroEnCuenta,
+                    cuenta.TipoDeTarjeta);
+            }
+            using (XLWorkbook wb = new XLWorkbook())
+            {
+                wb.Worksheets.Add(dataTable);
+                using (MemoryStream stream = new MemoryStream())
+                {
+                    wb.SaveAs(stream);
+                    return File(stream.ToArray(),
+                        "application/vnd.openxlmformats-officedocument.spreadsheetml.sheet",
+                        nombreArchivo);
+                }
+            }
+        }
+
         public async Task<IActionResult> Crear(CuentaViewModel cuenta)
         {
             CuentasViewModel cuentas = new CuentasViewModel();
@@ -56,7 +114,7 @@ namespace PracticaCurso.Controllers
             cuentas.TiposDeCuenta = tiposdecuenta.Select(c => new SelectListItem
             {
                 Value = c.Id.ToString(),
-                Text = c.TipoCuenta.ToString() 
+                Text = c.TipoCuenta.ToString()
             }).ToList();
 
             cuentas.Cuenta = new CuentaViewModel();
