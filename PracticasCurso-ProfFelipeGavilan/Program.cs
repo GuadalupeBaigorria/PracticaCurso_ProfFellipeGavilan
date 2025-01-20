@@ -1,12 +1,17 @@
+using Microsoft.AspNetCore.Identity;
 using PracticaCurso.DAL;
 using PracticaCurso.DAL.Interfaces;
+using PracticaCurso.DAL.Repositorios;
+using PracticaCurso.Models;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 builder.Services.AddTransient<IRepositorioCuentas, RepositorioCuentas>();
 builder.Services.AddAutoMapper(typeof(Program));
-
+builder.Services.AddTransient<IRepositorioUsuarios, RepositorioUsuarios>();
+builder.Services.AddTransient<IUserStore<UsuarioViewModel>, UsuarioStore>();
+builder.Services.AddIdentityCore<UsuarioViewModel>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
